@@ -1,0 +1,36 @@
+NNTOOL=nntool
+MODEL_SQ8=1
+# MODEL_POW2=1
+# MODEL_FP16=1
+# MODEL_NE16=1
+
+MODEL_SUFFIX?=
+MODEL_PREFIX?=nanoflownet_unquantized
+MODEL_PYTHON=python3
+MODEL_BUILD=BUILD_MODEL$(MODEL_SUFFIX)
+
+TRAINED_MODEL = nanoflownet_unquantized.tflite
+
+MODEL_EXPRESSIONS = $(MODEL_BUILD)/Expression_Kernels.c
+
+NNTOOL_EXTRA_FLAGS += 
+
+
+# Memory sizes for cluster L1, SoC L2 and Flash
+TARGET_L1_SIZE = 44000
+TARGET_L2_SIZE = 30000
+TARGET_L3_SIZE = 8000000
+
+# Cluster stack size for master core and other cores
+CLUSTER_STACK_SIZE=12288
+CLUSTER_SLAVE_STACK_SIZE=1024
+CLUSTER_NUM_CORES=8
+
+# FLASH and RAM type
+FLASH_TYPE = HYPER
+RAM_TYPE   = HYPER
+
+NNTOOL_SCRIPT = nntool_script
+
+
+$(info GEN ... $(CNN_GEN))
