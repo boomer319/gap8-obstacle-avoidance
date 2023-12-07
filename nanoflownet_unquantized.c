@@ -36,46 +36,40 @@
 #endif
 
 /* Camera defines */
-#define CAMERA_HEIGHT 324
-#define CAMERA_WIDTH 324
-
-#ifdef QVGA_IMG /* QVGA */
-#define CAMERA_HEIGHT 224
-#define CAMERA_WIDTH 162
+#if defined(QVGA_IMG) /* QVGA */
+    #define YRES 224
+    #define XRES 162
+#elif defined(QQVGA_IMG) /* QQVGA */
+    #define YRES 162
+    #define XRES 162
+#else
+    #define YRES 324
+    #define XRES 324
 #endif
 
-#ifdef QQVGA_IMG /* QQVGA */
-#define CAMERA_HEIGHT 162
-#define CAMERA_WIDTH 162
-#endif
-
-#ifdef SLICE_MODE /* SLICE MODE */
-
-#define ROI_WIDTH 162
-#define ROI_HEIGHT 112
-#define X (CAMERA_WIDTH - ROI_WIDTH) / 2
-#define Y (CAMERA_HEIGHT - ROI_HEIGHT) / 2
-#define CAMERA_WIDTH ROI_WIDTH
-#define CAMERA_HEIGHT ROI_HEIGHT
-
-#ifdef QVGA_IMG /* QVGA */
-#define ROI_WIDTH 162
-#define ROI_HEIGHT 112
-#define X (CAMERA_WIDTH - ROI_WIDTH) / 2
-#define Y (CAMERA_HEIGHT - ROI_HEIGHT) / 2
-#define CAMERA_WIDTH ROI_WIDTH
-#define CAMERA_HEIGHT ROI_HEIGHT
-#endif
-
-#ifdef QQVGA_IMG /* QQVGA */
-#define ROI_WIDTH 160
-#define ROI_HEIGHT 112
-#define X (CAMERA_WIDTH - ROI_WIDTH) / 2
-#define Y (CAMERA_HEIGHT - ROI_HEIGHT) / 2
-#define CAMERA_WIDTH ROI_WIDTH
-#define CAMERA_HEIGHT ROI_HEIGHT
-#endif
-
+#if defined(SLICE_MODE)
+    #if defined(QVGA_IMG)
+        #define ROI_WIDTH 162
+        #define ROI_HEIGHT 112
+        #define X (XRES - ROI_WIDTH) / 2
+        #define Y (YRES - ROI_HEIGHT) / 2
+        #define CAMERA_WIDTH ROI_WIDTH
+        #define CAMERA_HEIGHT ROI_HEIGHT
+    #elif defined(QQVGA_IMG)
+        #define ROI_WIDTH 160
+        #define ROI_HEIGHT 112
+        #define X (XRES - ROI_WIDTH) / 2
+        #define Y (YRES - ROI_HEIGHT) / 2
+        #define CAMERA_WIDTH ROI_WIDTH
+        #define CAMERA_HEIGHT ROI_HEIGHT
+    #else
+        #define ROI_WIDTH 162
+        #define ROI_HEIGHT 112
+        #define X (XRES - ROI_WIDTH) / 2
+        #define Y (YRES - ROI_HEIGHT) / 2
+        #define CAMERA_WIDTH ROI_WIDTH
+        #define CAMERA_HEIGHT ROI_HEIGHT
+    #endif
 #endif
 
 static struct pi_device cam;
