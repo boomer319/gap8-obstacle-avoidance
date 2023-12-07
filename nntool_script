@@ -2,11 +2,9 @@ set log_level INFO
 adjust
 fusions --scale8
 fusions -a expression_matcher
-imageformat input_1 bw8 shift_int8
-imageformat input_2 bw8 shift_int8
-draw
-aquant -s SQ8 <image file paths to quantize the net in order: 1_a 2_a 3_a 1_b 2_b 3_b where a and b form an input image pair> -T
-qerror <image file paths to quantize the net in order: 1_a 2_a 3_a 1_b 2_b 3_b where a and b form an input image pair> -T
+fquant -s SQ8
+#aquant -s SQ8 <image file paths to quantize the net in order: 1_a 2_a 3_a 1_b 2_b 3_b where a and b form an input image pair> -T
+#qerror <image file paths to quantize the net in order: 1_a 2_a 3_a 1_b 2_b 3_b where a and b form an input image pair> -T
 show
 set graph_produce_node_names true
 set graph_produce_operinfos true

@@ -5,7 +5,47 @@ Please refer to the [main repository](https://github.com/tudelft/nanoflownet) fo
 
 ---
 
-`nntool_script` must be modified to include file paths for quantization. No sample images are included.
+## How to use
+
+### Install `gap_sdk`
+```
+git clone git@github.com:GreenWaves-Technologies/gap_sdk.git
+git checkout ef8ee923dfb39cf2ef962d25e5bf69f8881ebfb3
+```
+
+Implement the following bug workaround in `gap_sdk`. Modify `rtos/pmsis/bsp/include/bsp/ai_deck.h`, put the following at the bottom of the file, before the `#endif`
+```c
+// #define CONFIG_SPIFLASH_SECTOR_SIZE (1<<12)
+
+#include "bsp/flash/hyperflash.h"
+#include "bsp/ram/hyperram.h"
+
+#define pi_default_flash_conf pi_hyperflash_conf
+#define pi_default_flash_conf_init pi_hyperflash_conf_init
+
+#define pi_default_ram_conf pi_hyperram_conf
+#define pi_default_ram_conf_init pi_hyperram_conf_init
+
+// #endif
+```
+
+Follow the installation [instructions](https://github.com/GreenWaves-Technologies/gap_sdk/tree/ef8ee923dfb39cf2ef962d25e5bf69f8881ebfb3) (README.md, make sure you are on the suggested commit). Source the AI-deck config file; `configs/ai_deck.sh`. Modify `OPENOCD_CABLE` if necessary (redo source). Perform a full install; `make sdk`.
+
+### Configuration
+`nntool_script` can be modified to include grayscale image (112hx160w) file paths for quantization and quantization evaluation. No sample images are included. Default config uses fquant ("fake" quantization).
+
+### Execution
+To execute on the AI-deck, in this repo:
+```
+make all run PMSIS_OS=pulpos platform=board
+```
+
+To flash
+```
+make all flash PMSIS_OS=pulpos platform=board
+```
+
+`freertos` and `gvsoc` are not supported.
 
 ## Publication:
 [arXiv preprint](https://arxiv.org/abs/2209.06918)
