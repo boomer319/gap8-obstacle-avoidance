@@ -302,8 +302,9 @@ int test_nanoflownet_unquantized(void)
         error = error * 9 / 10 + (flow_error(Output_1, Output_2, 40, 28)) / 10;
         printf("Error is %d\n", error);
         yaw_command =error/30; //800
+
         printf("Yaw command is %d\n", yaw_command);
-        sprintf(imgName, "../../../out/floMagnitude_%ld.ppm", idx);
+        // sprintf(imgName, "../../../out/floMagnitude_%ld.ppm", idx);
         // WriteImageToFile(imgName, 40, 28, sizeof(uint8_t), Output_2, GRAY_SCALE_IO);
         // printf("Flow error: %d\n", error);ma
         idx++;
